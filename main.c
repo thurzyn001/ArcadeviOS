@@ -3,12 +3,16 @@
 #include <locale.h> //Biblioteca para configuração de localidade
 #include <windows.h> //Biblioteca para funções específicas do Windows
 #include <conio.h> //Biblioteca para funções de console
-#include "processos.h" //Cabeçalho para gerenciamento de processos
 
+#include "processos.h" //Cabeçalho de processos.c
+#include "colors.h" //Cabeçalho de colors.c
+#include "utils.h" //Cabeçalho de utils.c
+
+/*Função Principal do Código, onde está o menu principal do ArcadeviOS*/
 
 int main() {
-    //
-    setlocale(LC_ALL, "pt_BR.UTF-8");
+
+    setlocale(LC_ALL, "pt_BR.UTF-8"); //comando para forçar o terminal a usar o padrão UTF-8, de encoding, evitando problemas com acentos.
 
     int op;
 
@@ -16,10 +20,9 @@ int main() {
         
         system("cls");
 
-        printf("\033[1;36m=====================================\033[0m\n");
-        printf("             ");
-        printf("\033[1;31mA\033[1;33mr\033[1;32mc\033[1;36ma\033[1;34md\033[1;35me\033[1;31mv\033[1;33mi\033[1;32mO\033[1;36mS\033[0m\n");
-        printf("\033[1;36m=====================================\033[0m\n");
+        printf(cyan "==================================================" reset "\n");
+        centralizarRainbow("ArcadeviOS", 50);
+        printf(cyan "\n==================================================" reset "\n");
 
         printf("1 - Processos\n");
         printf("2 - Escalonador\n");

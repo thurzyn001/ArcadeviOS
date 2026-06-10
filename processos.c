@@ -2,7 +2,10 @@
 #include <stdlib.h> //Biblioteca de funções utilitárias
 #include <string.h> //Biblioteca para manipulação de strings
 #include <conio.h> //Biblioteca para funções de console
+
 #include "processos.h" //Cabeçalho para gerenciamento de processos
+#include "colors.h"
+#include "utils.h"
 
 Processo processos[MAX_PROCESSOS];
 int totalProcessos = 0;
@@ -106,10 +109,9 @@ void MenuProcessos(){
 
         system("cls");
 
-        printf("\033[1;36m=====================================\033[0m\n");
-        printf("             ");
-        printf("\033[1;31mA\033[1;33mr\033[1;32mc\033[1;36ma\033[1;34md\033[1;35me\033[1;31mv\033[1;33mi\033[1;32mO\033[1;36mS\033[0m\n");
-        printf("\033[1;36m=====================================\033[0m\n");
+        printf(cyan "==================================================" reset "\n");
+        centralizarRainbow("Gerenciador de Processos", 50);
+        printf(cyan "\n==================================================" reset "\n");
 
         printf("1 - Criar Processo\n");
         printf("2 - Encerrar Processo\n");
