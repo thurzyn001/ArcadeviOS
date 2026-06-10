@@ -1,7 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "processos.h"
+#include <stdio.h> //Biblioteca de entrada e saída
+#include <stdlib.h> //Biblioteca de funções utilitárias
+#include <string.h> //Biblioteca para manipulação de strings
+#include <conio.h> //Biblioteca para funções de console
+#include "processos.h" //Cabeçalho para gerenciamento de processos
 
 Processo processos[MAX_PROCESSOS];
 int totalProcessos = 0;
@@ -19,6 +20,9 @@ char* nomeEstado(Estado e) {
 }
 
 void criarProcesso() {
+
+    system("cls");
+
     if(totalProcessos >= MAX_PROCESSOS) {
         printf("Limite de processos atingido!\n");
         return;
@@ -45,6 +49,9 @@ void criarProcesso() {
 }
 
 void encerrarProcesso(int pid) {
+
+    system("cls");
+
     for(int i = 0; i < totalProcessos; i++) {
         if(processos[i].pid == pid) {
             processos[i].estado = TERMINATED;
@@ -57,6 +64,9 @@ void encerrarProcesso(int pid) {
 }
 
 void alterarEstado(int pid, Estado novoEstado) {
+
+    system("cls");
+
     for(int i = 0; i < totalProcessos; i++) {
         if(processos[i].pid == pid) {
             processos[i].estado = novoEstado;
@@ -69,6 +79,9 @@ void alterarEstado(int pid, Estado novoEstado) {
 }
 
 void exibirProcessos() {
+
+    system("cls");
+
     printf("\n-------------------------------------\n");
     printf("PID\tNome\tEstado\n");
     printf("-------------------------------------\n");
@@ -85,13 +98,13 @@ void exibirProcessos() {
 
 void MenuProcessos(){
 
-    system("cls");
-
     int op;
     int pid;
     int estado;
 
     do {
+
+        system("cls");
 
         printf("\033[1;36m=====================================\033[0m\n");
         printf("             ");
@@ -135,6 +148,9 @@ void MenuProcessos(){
 
             case 4:
                 exibirProcessos();
+                printf("\nPressione qualquer tecla para continuar...");
+                getch();
+                system("cls");
                 break;
         }
 

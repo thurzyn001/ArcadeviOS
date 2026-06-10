@@ -2,7 +2,9 @@
 #include <stdlib.h> //Biblioteca de funções utilitárias
 #include <locale.h> //Biblioteca para configuração de localidade
 #include <windows.h> //Biblioteca para funções específicas do Windows
+#include <conio.h> //Biblioteca para funções de console
 #include "processos.h" //Cabeçalho para gerenciamento de processos
+
 
 int main() {
     //
