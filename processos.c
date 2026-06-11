@@ -2,6 +2,7 @@
 #include <stdlib.h> //Biblioteca de funções utilitárias
 #include <string.h> //Biblioteca para manipulação de strings
 #include <conio.h> //Biblioteca para funções de console
+#include <windows.h> //Biblioteca para funções específicas do Windows
 
 #include "processos.h" //Cabeçalho para gerenciamento de processos
 #include "colors.h"
@@ -58,7 +59,7 @@ void encerrarProcesso(int pid) {
     for(int i = 0; i < totalProcessos; i++) {
         if(processos[i].pid == pid) {
             processos[i].estado = TERMINATED;
-            printf("Processo encerrado.\n");
+            printf("Processo %s de Pid: %d encerrado.\n", processos[i].nome, processos[i].pid);
             return;
         }
     }
@@ -86,11 +87,11 @@ void exibirProcessos() {
     system("cls");
 
     printf("\n-------------------------------------\n");
-    printf("PID\tNome\tEstado\n");
+    printf("PID\tNome\t\tEstado\n");
     printf("-------------------------------------\n");
 
     for(int i = 0; i < totalProcessos; i++) {
-        printf("%d\t%s\t%s\n",
+        printf("%d\t%s\t\t%s\n",
                processos[i].pid,
                processos[i].nome,
                nomeEstado(processos[i].estado));
@@ -109,28 +110,32 @@ void MenuProcessos(){
 
         system("cls");
 
-        printf(cyan "==================================================" reset "\n");
+        linha(cyan, '=', 50);
         centralizarRainbow("Gerenciador de Processos", 50);
-        printf(cyan "\n==================================================" reset "\n");
+        linha(cyan, '=', 50);
+
 
         printf("1 - Criar Processo\n");
         printf("2 - Encerrar Processo\n");
         printf("3 - Alterar Estado\n");
         printf("4 - Exibir Processos\n");
-        printf("0 - Sair\n");
-        printf("Opcao: ");
-        scanf("%d", &op);
+        printf("0 - Voltar ao Menu Principal\n");
+        
+        op = lerInteiro("Opcao: ");
 
         switch(op) {
 
             case 1:
                 criarProcesso();
+                pausar();
+                limparBuffer();
                 break;
 
             case 2:
                 printf("PID: ");
                 scanf("%d", &pid);
                 encerrarProcesso(pid);
+                pausar();
                 break;
 
             case 3:
@@ -146,13 +151,22 @@ void MenuProcessos(){
                 scanf("%d", &estado);
 
                 alterarEstado(pid, (Estado)estado);
+                pausar();
                 break;
 
             case 4:
                 exibirProcessos();
-                printf("\nPressione qualquer tecla para continuar...");
-                getch();
-                system("cls");
+                pausar();
+                break;
+
+            case 0:
+                printf("Voltando ao Menu principal...\n");
+                Sleep(1000);
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+                Sleep(1000);
                 break;
         }
 
