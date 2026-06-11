@@ -21,7 +21,7 @@ int main() {
         system("cls");
 
         printf(cyan "==================================================" reset "\n");
-        centralizarRainbow("ArcadeviOS", 50);
+        centralizar("ArcadeviOS", 50);
         printf(cyan "\n==================================================" reset "\n");
 
         printf("1 - Processos\n");
