@@ -2,6 +2,7 @@
 #include <string.h>
 #include <conio.h>
 #include <windows.h>
+#include <ctype.h>
 
 #include "utils.h"
 #include "colors.h"
@@ -30,7 +31,7 @@ void apagarLinhas(int n) {
     }
 }
 
-void lerTexto(const char *mensagem, char *destino, int tamanho) {
+void lerString(const char *mensagem, char *destino, int tamanho) {
 
     int valido;
 
@@ -53,7 +54,13 @@ void lerTexto(const char *mensagem, char *destino, int tamanho) {
 
         for(int i = 0; destino[i] != '\0'; i++) {
 
-            if(!isalpha(destino[i]) && destino[i] != ' ') {
+            if(
+                !isalnum(destino[i]) &&
+                destino[i] != ' ' &&
+                destino[i] != '_' &&
+                destino[i] != '-' &&
+                destino[i] != '.'
+            ) {
                 valido = 0;
                 break;
             }
@@ -126,8 +133,14 @@ void centralizarRainbow(const char *texto, int largura) {
 }
 
 void pausar() {
-    printf("\nPressione qualquer tecla para continuar...");
-    getch();
+
+    int tecla;
+
+    printf("\nPressione ENTER para continuar...");
+
+    do {
+        tecla = getch();
+    } while(tecla != 13); // Enter
 }
 
 void menuPrincipal(){
@@ -159,38 +172,45 @@ void menuPrincipal(){
                 break;
 
             case 2:
-                printf("WIP\n");
+                apagarLinhas(1);
+                printf("WIP");
                 Sleep(1000);
                 break;
 
             case 3:
-                printf("WIP\n");
+                apagarLinhas(1);
+                printf("WIP");
                 Sleep(1000);
                 break;
 
             case 4:
-                printf("WIP\n");
+                apagarLinhas(1);
+                printf("WIP");
                 Sleep(1000);
                 break;
 
             case 5:
-                printf("WIP\n");
+                apagarLinhas(1);
+                printf("WIP");
                 Sleep(1000);
                 break;
 
             case 6:
-                printf("WIP\n");
+                apagarLinhas(1);
+                printf("WIP");
                 Sleep(1000);
                 break;
 
             case 0:
-                printf("Saindo...\n");
+                apagarLinhas(1);
+                printf("Saindo...");
                 Sleep(1000);
                 break;
 
 
             default:
-                printf("Opcao invalida!\n");
+                apagarLinhas(1);
+                printf("Opcao invalida!");
                 Sleep(1000);
                 break;
             }

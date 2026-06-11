@@ -36,20 +36,17 @@ void criarProcesso() {
 
     p.pid = proxPID++;
 
-    printf("Nome: ");
-    scanf(" %49[^\n]", p.nome);
+    lerString("Nome: ", p.nome, sizeof(p.nome));
 
-    printf("Prioridade: ");
-    scanf("%d", &p.prioridade);
+    p.prioridade = lerInteiro("Prioridade: ");
 
-    printf("Tempo de execucao: ");
-    scanf("%d", &p.tempoExecucao);
+    p.tempoExecucao = lerInteiro("Tempo de Execução: ");
 
     p.estado = NEW;
 
     processos[totalProcessos++] = p;
 
-    printf("Processo criado com PID %d\n", p.pid);
+    printf("Processo criado com PID: %d\n", p.pid);
 }
 
 void encerrarProcesso(int pid) {
@@ -128,7 +125,6 @@ void MenuProcessos(){
             case 1:
                 criarProcesso();
                 pausar();
-                limparBuffer();
                 break;
 
             case 2:
@@ -160,13 +156,14 @@ void MenuProcessos(){
                 break;
 
             case 0:
-                printf("Voltando ao Menu principal...\n");
-                Sleep(1000);
+                apagarLinhas(2);
+                printf("\nVoltando ao Menu principal...\n");
+                Sleep(750);
                 break;
 
             default:
                 printf("Opcao invalida!\n");
-                Sleep(1000);
+                Sleep(750);
                 break;
         }
 
