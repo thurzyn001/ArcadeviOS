@@ -7,9 +7,9 @@
 #include "processos.h" //Cabeçalho de processos.c
 #include "colors.h" //Cabeçalho de colors.c
 #include "utils.h" //Cabeçalho de utils.c
+#include "escalonador.h" //
 
 //Função Principal do Código
-
 int main() {
 
     setlocale(LC_ALL, "pt_BR.UTF-8"); //comando para forçar o terminal a usar o padrão UTF-8
