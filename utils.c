@@ -8,6 +8,7 @@
 #include "colors.h"
 #include "processos.h"
 #include "escalonador.h"
+#include "memoria.h"
 
 void limparBuffer(){
     int c;
@@ -178,7 +179,7 @@ void menuPrincipal(){
 
             case 3:
                 apagarLinhas(1);
-                printf("WIP");
+                menuMemoria();
                 Sleep(1000);
                 break;
 

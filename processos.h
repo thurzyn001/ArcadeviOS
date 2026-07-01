@@ -2,7 +2,6 @@
 #define PROCESSOS_H
 
 #define MAX_PROCESSOS 100
-
 typedef enum {
     NEW,
     READY,
@@ -12,20 +11,31 @@ typedef enum {
 } Estado;
 
 typedef struct {
+
     int pid;
     char nome[50];
+
     int prioridade;
+
     int tempoExecucao;
+    int tempoRestante;
+
+    int memoria;
+
     Estado estado;
+
 } Processo;
 
 extern Processo processos[MAX_PROCESSOS];
 extern int totalProcessos;
+extern int proxPID;
 
 void criarProcesso();
 void encerrarProcesso(int pid);
 void alterarEstado(int pid, Estado novoEstado);
 void exibirProcessos();
 void MenuProcessos();
+
+char *nomeEstado(Estado e);
 
 #endif
