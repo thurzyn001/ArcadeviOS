@@ -24,6 +24,8 @@ typedef struct {
 
     Estado estado;
 
+    char dispositivo[30];
+
 } Processo;
 
 extern Processo processos[MAX_PROCESSOS];

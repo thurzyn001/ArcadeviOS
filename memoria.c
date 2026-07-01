@@ -86,12 +86,12 @@ void liberarMemoria(int pid) {
 
             unirBlocosLivres();
 
-            printf(green "\nMemoria liberada com sucesso.\n" reset);
+            printf(green "\nMemoria liberada com sucesso." reset);
             return;
         }
     }
 
-    printf(yellow "\nNenhuma memoria encontrada para esse PID.\n" reset);
+    printf(yellow "\nNenhuma memoria encontrada para esse PID." reset);
 }
 
 void exibirBarraMemoria(int usada) {

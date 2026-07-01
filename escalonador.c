@@ -7,12 +7,13 @@
 #include "utils.h"
 #include "colors.h"
 #include "memoria.h"
+#include "dispositivos.h"
 
 #define TEMPO_CPU 400
 
 void mostrarFilaFCFS() {
 
-    printf("\n");
+    system("cls");
 
     linha(cyan, '=');
     centralizarRainbow("FILA DE EXECUCAO");
@@ -319,7 +320,7 @@ void resetarProcessos() {
     }
 
     inicializarMemoria();
-
+    resetarDispositivos();
     int realocados = 0;
     int falhas = 0;
 

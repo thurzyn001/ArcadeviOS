@@ -96,6 +96,8 @@ void criarProcesso() {
 
     p.estado = READY;
 
+    strcpy(p.dispositivo, "-");
+
     if(!alocarMemoria(p.pid, p.nome, p.memoria)){
 
     printf(red "\nNao ha memoria suficiente.\n" reset);
@@ -210,25 +212,27 @@ void exibirProcessos() {
         return;
     }
 
-    printf("%-5s %-22s %-10s %-10s %-10s %-15s\n",
+    printf("%-5s %-20s %-8s %-8s %-10s %-15s %-15s\n",
        "PID",
        "Nome",
        "Prior.",
        "Tempo",
-       "RAM(MB)",
-       "Estado");
+       "RAM",
+       "Estado",
+       "Dispositivo");
 
     linha(cyan, '-');
 
     for(int i = 0; i < totalProcessos; i++) {
 
-        printf("%-5d %-22s %-10d %-10d %-10d %-15s\n",
-            processos[i].pid,
-            processos[i].nome,
-            processos[i].prioridade,
-            processos[i].tempoExecucao,
-            processos[i].memoria,
-            nomeEstado(processos[i].estado));
+        printf("%-5d %-20s %-8d %-8d %-10d %-15s %-15s\n",
+        processos[i].pid,
+        processos[i].nome,
+        processos[i].prioridade,
+        processos[i].tempoExecucao,
+        processos[i].memoria,
+        nomeEstado(processos[i].estado),
+        processos[i].dispositivo);
     }
 
     linha(cyan, '-');

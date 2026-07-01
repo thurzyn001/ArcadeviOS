@@ -9,6 +9,8 @@
 #include "processos.h"
 #include "escalonador.h"
 #include "memoria.h"
+#include "arquivos.h"
+#include "dispositivos.h"
 
 void limparBuffer(){
     int c;
@@ -206,13 +208,13 @@ void menuPrincipal(){
 
             case 4:
                 apagarLinhas(1);
-                printf("WIP");
+                menuDispositivos();
                 Sleep(1000);
                 break;
 
             case 5:
                 apagarLinhas(1);
-                printf("WIP");
+                menuArquivos();
                 Sleep(1000);
                 break;
 

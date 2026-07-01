@@ -9,6 +9,8 @@
 #include "utils.h" //Cabeçalho de utils.c
 #include "escalonador.h" //Cabeçalho de escalonador.c
 #include "memoria.h" //Cabeçalho de memoria.c
+#include "arquivos.h" //Cabeçalho de arquivos.c
+#include "dispositivos.h" //Cabeçalho de dispositivos.c
 
 //Função Principal do Código
 int main() {
@@ -21,7 +23,7 @@ int main() {
     SetConsoleCP(CP_UTF8); //comandos para forçar o terminal a usar o padrão UTF-8
 
     inicializarMemoria(); // Inicializa a memória
-
+    inicializarDispositivos(); // Inicializa os dispositivos
     menuPrincipal(); // Chamada da Funcão do Menu principal
 
     return 0;
