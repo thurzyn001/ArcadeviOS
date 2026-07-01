@@ -13,9 +13,14 @@
 //Função Principal do Código
 int main() {
 
-    inicializarMemoria(); // Inicializa a memória
+    system("title ArcadeviOS 1.0"); //Define o título da janela do console
+    system("mode con: cols=120 lines=40");
 
-    setlocale(LC_ALL, "pt_BR.UTF-8"); //comando para forçar o terminal a usar o padrão UTF-8
+    setlocale(LC_ALL, "pt_BR.UTF-8"); 
+    SetConsoleOutputCP(CP_UTF8); 
+    SetConsoleCP(CP_UTF8); //comandos para forçar o terminal a usar o padrão UTF-8
+
+    inicializarMemoria(); // Inicializa a memória
 
     menuPrincipal(); // Chamada da Funcão do Menu principal
 

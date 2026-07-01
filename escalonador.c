@@ -6,24 +6,24 @@
 #include "processos.h"
 #include "utils.h"
 #include "colors.h"
+#include "memoria.h"
 
-#define LARGURA_MENU 75
 #define TEMPO_CPU 400
 
 void mostrarFilaFCFS() {
 
     printf("\n");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("FILA DE EXECUCAO", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("FILA DE EXECUCAO");
+    linha(cyan, '=');
 
     printf("%-5s %-25s %-10s\n",
            "PID",
            "PROCESSO",
            "TEMPO");
 
-    linha(cyan, '-', LARGURA_MENU);
+    linha(cyan, '-');
 
     int encontrou = 0;
 
@@ -41,7 +41,7 @@ void mostrarFilaFCFS() {
         }
     }
 
-    linha(cyan, '-', LARGURA_MENU);
+    linha(cyan, '-');
 
     if(!encontrou)
         printf("\nNao ha processos prontos.\n");
@@ -51,9 +51,9 @@ void executarFCFS() {
 
     system("cls");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("ESCALONADOR FCFS", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("ESCALONADOR FCFS");
+    linha(cyan, '=');
 
     mostrarFilaFCFS();
 
@@ -73,9 +73,9 @@ void executarFCFS() {
         processos[i].estado = RUNNING;
         processos[i].tempoRestante = processos[i].tempoExecucao;
 
-        linha(green, '=', LARGURA_MENU);
-        centralizarRainbow("CPU EXECUTANDO", LARGURA_MENU);
-        linha(green, '=', LARGURA_MENU);
+        linha(green, '=');
+        centralizarRainbow("EXECUTANDO FCFS");
+        linha(green, '=');
 
         printf("PID.............: %d\n", processos[i].pid);
         printf("Nome............: %s\n", processos[i].nome);
@@ -93,8 +93,9 @@ void executarFCFS() {
         }
 
         processos[i].estado = TERMINATED;
+        liberarMemoria(processos[i].pid);
 
-        printf("\n\nProcesso finalizado!\n");
+        printf(green "\n\nProcesso finalizado!\n" reset);
 
         executados++;
         tempoTotal += processos[i].tempoExecucao;
@@ -104,23 +105,23 @@ void executarFCFS() {
 
     system("cls");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("RESUMO FCFS", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("RESUMO FCFS");
+    linha(cyan, '=');
 
     printf("Processos executados.: %d\n", executados);
     printf("Tempo total.........: %d\n", tempoTotal);
 
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
 }
 
 void executarRoundRobin() {
 
     system("cls");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("ESCALONADOR ROUND ROBIN", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("ESCALONADOR ROUND ROBIN");
+    linha(cyan, '=');
 
     if(totalProcessos == 0) {
         printf("\nNenhum processo cadastrado.\n");
@@ -157,9 +158,9 @@ void executarRoundRobin() {
 
                 system("cls");
 
-                linha(magenta, '=', LARGURA_MENU);
-                centralizarRainbow("CPU - ROUND ROBIN", LARGURA_MENU);
-                linha(magenta, '=', LARGURA_MENU);
+                linha(magenta, '=');
+                centralizarRainbow("EXECUTANDO ROUND ROBIN");
+                linha(magenta, '=');
 
                 processos[i].estado = RUNNING;
 
@@ -187,6 +188,7 @@ void executarRoundRobin() {
                 if(processos[i].tempoRestante == 0) {
 
                     processos[i].estado = TERMINATED;
+                    liberarMemoria(processos[i].pid);
                     executados++;
 
                     printf(green "\n\nProcesso finalizado!\n" reset);
@@ -207,24 +209,24 @@ void executarRoundRobin() {
 
     system("cls");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("RESUMO ROUND ROBIN", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("RESUMO ROUND ROBIN");
+    linha(cyan, '=');
 
     printf("Quantum usado.......: %d\n", quantum);
     printf("Ciclos executados...: %d\n", ciclos);
     printf("Processos finalizados: %d\n", executados);
 
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
 }
 
 void executarPrioridade() {
 
     system("cls");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("ESCALONADOR POR PRIORIDADE", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("ESCALONADOR POR PRIORIDADE");
+    linha(cyan, '=');
 
     if(totalProcessos == 0) {
         printf("\nNenhum processo cadastrado.\n");
@@ -260,9 +262,9 @@ void executarPrioridade() {
         processos[i].estado = RUNNING;
         processos[i].tempoRestante = processos[i].tempoExecucao;
 
-        linha(yellow, '=', LARGURA_MENU);
-        centralizarRainbow("CPU - PRIORIDADE", LARGURA_MENU);
-        linha(yellow, '=', LARGURA_MENU);
+        linha(yellow, '=');
+        centralizarRainbow("EXECUTANDO PRIORIDADE");
+        linha(yellow, '=');
 
         printf("PID.............: %d\n", processos[i].pid);
         printf("Nome............: %s\n", processos[i].nome);
@@ -282,7 +284,7 @@ void executarPrioridade() {
         }
 
         processos[i].estado = TERMINATED;
-
+        liberarMemoria(processos[i].pid);
         printf(green "\n\nProcesso finalizado!\n" reset);
 
         executados++;
@@ -293,38 +295,56 @@ void executarPrioridade() {
 
     system("cls");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("RESUMO PRIORIDADE", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("RESUMO PRIORIDADE");
+    linha(cyan, '=');
 
     printf("Processos executados.: %d\n", executados);
     printf("Tempo total..........: %d\n", tempoTotal);
 
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
 }
 
 void resetarProcessos() {
 
     system("cls");
 
-    linha(yellow, '=', LARGURA_MENU);
-    centralizarRainbow("RESETAR PROCESSOS", LARGURA_MENU);
-    linha(yellow, '=', LARGURA_MENU);
+    linha(yellow, '=');
+    centralizarRainbow("RESETAR PROCESSOS");
+    linha(yellow, '=');
 
     if(totalProcessos == 0) {
         printf("\nNenhum processo cadastrado.\n");
         return;
     }
 
+    inicializarMemoria();
+
+    int realocados = 0;
+    int falhas = 0;
+
     for(int i = 0; i < totalProcessos; i++) {
+
         processos[i].estado = READY;
         processos[i].tempoRestante = processos[i].tempoExecucao;
+
+        if(alocarMemoria(processos[i].pid, processos[i].nome, processos[i].memoria)) {
+            realocados++;
+        } else {
+            processos[i].estado = TERMINATED;
+            falhas++;
+        }
     }
 
-    printf("\nTodos os processos foram resetados para READY.\n");
-    printf("Tempo restante restaurado com sucesso.\n");
+    printf("\nProcessos resetados para READY.\n");
+    printf("Memoria reconstruida com base nos processos cadastrados.\n");
+    printf("Realocados: %d\n", realocados);
 
-    linha(yellow, '=', LARGURA_MENU);
+    if(falhas > 0) {
+        printf(red "Falhas de realocacao: %d\n" reset, falhas);
+    }
+
+    linha(yellow, '=');
 }
 
 void menuEscalonador() {
@@ -335,9 +355,9 @@ void menuEscalonador() {
 
         system("cls");
 
-        linha(cyan, '=', LARGURA_MENU);
-        centralizarRainbow("ESCALONADOR", LARGURA_MENU);
-        linha(cyan, '=', LARGURA_MENU);
+        linha(cyan, '=');
+        centralizarRainbow("ESCALONADOR");
+        linha(cyan, '=');
 
         printf("1 - Executar FCFS\n");
         printf("2 - Executar Round Robin\n");
@@ -346,7 +366,7 @@ void menuEscalonador() {
         printf("5 - Resetar Processos\n");
         printf("0 - Voltar\n");
 
-        linha(cyan, '-', LARGURA_MENU);
+        linha(cyan, '-');
 
         op = lerInteiro("Opcao: ");
 

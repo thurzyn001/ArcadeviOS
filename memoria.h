@@ -22,6 +22,8 @@ void liberarMemoria(int pid);
 
 void unirBlocosLivres();
 
+void exibirBarraMemoria(int usada);
+
 void exibirMapaMemoria();
 void menuMemoria();
 

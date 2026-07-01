@@ -15,11 +15,13 @@ void limparBuffer(){
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void linha(const char *cor, char caractere, int tamanho) {
+void linha(const char *cor, char caractere) {
+
+    int largura = larguraTerminal() - 1;
 
     printf("%s", cor);
 
-    for(int i = 0; i < tamanho; i++) {
+    for(int i = 0; i < largura; i++) {
         printf("%c", caractere);
     }
 
@@ -109,10 +111,25 @@ int lerInteiro(const char *mensagem) {
     }
 }
 
-void centralizar(const char *texto, int largura) {
+int larguraTerminal() {
 
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+    if(GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+        return csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    }
+
+    return 80;
+}
+
+void centralizar(const char *texto) {
+
+    int largura = larguraTerminal() - 1;
     int tamanho = strlen(texto);
     int espacos = (largura - tamanho) / 2;
+
+    if(espacos < 0)
+        espacos = 0;
 
     for(int i = 0; i < espacos; i++) {
         printf(" ");
@@ -121,10 +138,14 @@ void centralizar(const char *texto, int largura) {
     printf("%s\n", texto);
 }
 
-void centralizarRainbow(const char *texto, int largura) {
+void centralizarRainbow(const char *texto) {
 
+    int largura = larguraTerminal() - 1;
     int tamanho = strlen(texto);
     int espacos = (largura - tamanho) / 2;
+
+    if(espacos < 0)
+        espacos = 0;
 
     for(int i = 0; i < espacos; i++) {
         printf(" ");
@@ -153,9 +174,9 @@ void menuPrincipal(){
         
         system("cls");
 
-        linha(cyan, '=', 50);
-        centralizarRainbow("ArcadeviOS", 50);
-        linha(cyan, '=', 50);
+        linha(cyan, '=');
+        centralizarRainbow("ArcadeviOS");
+        linha(cyan, '=');
 
         printf("1 - Processos\n");
         printf("2 - Escalonador\n");

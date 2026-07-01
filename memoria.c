@@ -7,8 +7,6 @@
 #include "utils.h"
 #include "colors.h"
 
-#define LARGURA_MENU 75
-
 BlocoMemoria memoria[MAX_BLOCOS];
 int totalBlocos = 0;
 
@@ -96,15 +94,57 @@ void liberarMemoria(int pid) {
     printf(yellow "\nNenhuma memoria encontrada para esse PID.\n" reset);
 }
 
+void exibirBarraMemoria(int usada) {
+
+    int largura = 60;
+    int ocupados = (usada * largura) / MEMORIA_TOTAL;
+    int porcentagem = (usada * 100) / MEMORIA_TOTAL;
+
+    const char *cor;
+
+    if(porcentagem < 50)
+        cor = green;
+    else if(porcentagem < 80)
+        cor = yellow;
+    else
+        cor = red;
+
+    printf("\nRAM: [");
+
+    for(int i = 0; i < largura; i++) {
+
+        if(i < ocupados)
+            printf("%s█" reset, cor);
+        else
+            printf(white "░" reset);
+    }
+
+    printf("] %d%%\n", porcentagem);
+}
+
+void calcularBlocos(int *ocupados, int *livres) {
+
+    *ocupados = 0;
+    *livres = 0;
+
+    for(int i = 0; i < totalBlocos; i++) {
+
+        if(memoria[i].livre)
+            (*livres)++;
+        else
+            (*ocupados)++;
+    }
+}
+
 void exibirMapaMemoria() {
+
+    int largura = larguraTerminal();
 
     system("cls");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("MAPA DE MEMORIA", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
-
     int usada = 0;
+    int blocosOcupados = 0;
+    int blocosLivres = 0;
 
     for(int i = 0; i < totalBlocos; i++) {
         if(!memoria[i].livre) {
@@ -112,28 +152,77 @@ void exibirMapaMemoria() {
         }
     }
 
-    printf("Memoria total....: %d MB\n", MEMORIA_TOTAL);
-    printf("Memoria usada....: %d MB\n", usada);
-    printf("Memoria livre....: %d MB\n\n", MEMORIA_TOTAL - usada);
+    calcularBlocos(&blocosOcupados, &blocosLivres);
 
-    printf("%-10s %-10s %-10s %-25s\n",
-           "Inicio",
-           "Tamanho",
-           "Status",
-           "Processo");
+    linha(cyan, '=');
+    centralizarRainbow("MAPA DE MEMORIA");
+    linha(cyan, '=');
 
-    linha(cyan, '-', LARGURA_MENU);
+    exibirBarraMemoria(usada);
 
-    for(int i = 0; i < totalBlocos; i++) {
+    printf("\n");
 
-        printf("%-10d %-10d %-10s %-25s\n",
-               memoria[i].inicio,
-               memoria[i].tamanho,
-               memoria[i].livre ? "Livre" : "Ocupado",
-               memoria[i].nomeProcesso);
+    linha(cyan, '-');
+
+    printf("| %-14s : " green "%-8d" reset " MB | %-14s : " yellow "%-8d" reset " MB | %-14s : " green "%-8d" reset " MB |\n",
+           "Total", MEMORIA_TOTAL,
+           "Usada", usada,
+           "Livre", MEMORIA_TOTAL - usada);
+
+    linha(cyan, '-');
+
+    printf("| %-25s : " red "%-5d" reset " | %-25s : " green "%-5d" reset " |\n",
+           "Blocos utilizados", blocosOcupados,
+           "Blocos livres", blocosLivres);
+
+    linha(cyan, '-');
+
+    printf("\n");
+
+    printf(cyan "┌────────────┬────────────┬──────────────────────┬────────┬────────────────┐\n" reset);
+printf(cyan "│ %-10s │ %-10s │ %-20s │ %-6s │ %-14s │\n" reset,
+       "Inicio",
+       "Tamanho",
+       "Processo",
+       "PID",
+       "Status");
+printf(cyan "├────────────┼────────────┼──────────────────────┼────────┼────────────────┤\n" reset);
+
+for(int i = 0; i < totalBlocos; i++) {
+
+    printf(cyan "│ " reset "%-10d" cyan " │ " reset,
+           memoria[i].inicio);
+
+    printf(green "%4d MB" reset, memoria[i].tamanho);
+    printf("%3s", "");
+    printf(cyan " │ " reset);
+
+    if(memoria[i].livre)
+        printf("%-20s", "-");
+    else
+        printf("%-20s", memoria[i].nomeProcesso);
+
+    printf(cyan " │ " reset);
+
+    if(memoria[i].livre)
+        printf("%-6s", "-");
+    else
+        printf("%-6d", memoria[i].pid);
+
+    printf(cyan " │ " reset);
+
+    if(memoria[i].livre) {
+        printf(green "● Livre" reset);
+        printf("%7s", "");
+    } else {
+        printf(red "● Ocupado" reset);
+        printf("%5s", "");
     }
 
-    linha(cyan, '-', LARGURA_MENU);
+    printf(cyan " │\n" reset);
+}
+
+printf(cyan "└────────────┴────────────┴──────────────────────┴────────┴────────────────┘\n" reset);
 }
 
 void menuMemoria() {
@@ -144,14 +233,14 @@ void menuMemoria() {
 
         system("cls");
 
-        linha(cyan, '=', LARGURA_MENU);
-        centralizarRainbow("GERENCIADOR DE MEMORIA", LARGURA_MENU);
-        linha(cyan, '=', LARGURA_MENU);
+        linha(cyan, '=');
+        centralizarRainbow("GERENCIADOR DE MEMORIA");
+        linha(cyan, '=');
 
         printf("1 - Exibir Mapa de Memoria\n");
         printf("0 - Voltar\n");
 
-        linha(cyan, '-', LARGURA_MENU);
+        linha(cyan, '-');
 
         op = lerInteiro("Opcao: ");
 

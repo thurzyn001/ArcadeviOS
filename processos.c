@@ -8,8 +8,6 @@
 #include "utils.h"
 #include "memoria.h"
 
-#define LARGURA_MENU 75
-
 Processo processos[MAX_PROCESSOS];
 int totalProcessos = 0;
 int proxPID = 1;
@@ -52,9 +50,9 @@ void criarProcesso() {
 
     p.pid = proxPID++;
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("CRIAR PROCESSO", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("CRIAR PROCESSO");
+    linha(cyan, '=');
 
     lerString("Nome...............: ", p.nome, sizeof(p.nome));
 
@@ -108,11 +106,11 @@ void criarProcesso() {
 
     processos[totalProcessos++] = p;
 
-    printf("\n");
+    system("cls");
 
-    linha(green, '=', LARGURA_MENU);
-    centralizarRainbow("PROCESSO CRIADO", LARGURA_MENU);
-    linha(green, '=', LARGURA_MENU);
+    linha(green, '=');
+    centralizarRainbow("PROCESSO CRIADO");
+    linha(green, '=');
 
     printf("PID.............: %d\n", p.pid);
     printf("Nome............: %s\n", p.nome);
@@ -121,16 +119,16 @@ void criarProcesso() {
     printf("Memoria.........: %dMB\n", p.memoria);
     printf("Estado..........: %s\n", nomeEstado(p.estado));
 
-    linha(green, '=', LARGURA_MENU);
+    linha(green, '=');
 }
 
 void encerrarProcesso(int pid) {
 
     system("cls");
 
-    linha(red, '=', LARGURA_MENU);
-    centralizarRainbow("ENCERRAR PROCESSO", LARGURA_MENU);
-    linha(red, '=', LARGURA_MENU);
+    linha(red, '=');
+    centralizarRainbow("ENCERRAR PROCESSO");
+    linha(red, '=');
 
     for(int i = 0; i < totalProcessos; i++) {
 
@@ -166,9 +164,9 @@ void alterarEstado(int pid, Estado novoEstado) {
 
     system("cls");
 
-    linha(yellow, '=', LARGURA_MENU);
-    centralizarRainbow("ALTERAR ESTADO", LARGURA_MENU);
-    linha(yellow, '=', LARGURA_MENU);
+    linha(yellow, '=');
+    centralizarRainbow("ALTERAR ESTADO");
+    linha(yellow, '=');
 
     if(novoEstado < NEW || novoEstado > TERMINATED) {
 
@@ -202,9 +200,9 @@ void exibirProcessos() {
 
     system("cls");
 
-    linha(cyan, '=', LARGURA_MENU);
-    centralizarRainbow("LISTA DE PROCESSOS", LARGURA_MENU);
-    linha(cyan, '=', LARGURA_MENU);
+    linha(cyan, '=');
+    centralizarRainbow("LISTA DE PROCESSOS");
+    linha(cyan, '=');
 
     if(totalProcessos == 0) {
 
@@ -220,7 +218,7 @@ void exibirProcessos() {
        "RAM(MB)",
        "Estado");
 
-    linha(cyan, '-', LARGURA_MENU);
+    linha(cyan, '-');
 
     for(int i = 0; i < totalProcessos; i++) {
 
@@ -233,7 +231,7 @@ void exibirProcessos() {
             nomeEstado(processos[i].estado));
     }
 
-    linha(cyan, '-', LARGURA_MENU);
+    linha(cyan, '-');
 
     printf("\nTotal de processos: %d\n", totalProcessos);
 }
@@ -248,9 +246,9 @@ void MenuProcessos() {
 
         system("cls");
 
-        linha(cyan, '=', LARGURA_MENU);
-        centralizarRainbow("GERENCIADOR DE PROCESSOS", LARGURA_MENU);
-        linha(cyan, '=', LARGURA_MENU);
+        linha(cyan, '=');
+        centralizarRainbow("GERENCIADOR DE PROCESSOS");
+        linha(cyan, '=');
 
         printf("1 - Criar Processo\n");
         printf("2 - Encerrar Processo\n");
@@ -258,7 +256,7 @@ void MenuProcessos() {
         printf("4 - Exibir Processos\n");
         printf("0 - Voltar ao Menu Principal\n");
 
-        linha(cyan, '-', LARGURA_MENU);
+        linha(cyan, '-');
 
         op = lerInteiro("Opcao: ");
 

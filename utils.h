@@ -2,12 +2,13 @@
 #define UTILS_H
 
 void limparBuffer();
-void linha(const char *cor, char caractere, int tamanho);
+void linha(const char *cor, char caractere);
 void apagarLinhas(int n);
 void lerString(const char *mensagem, char *destino, int tamanho);
 int lerInteiro(const char *mensagem);
-void centralizar(const char *texto, int largura);
-void centralizarRainbow(const char *texto, int largura);
+int larguraTerminal();
+void centralizar(const char *texto);
+void centralizarRainbow(const char *texto);
 void pausar();
 void menuPrincipal();
 
