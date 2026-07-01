@@ -11,6 +11,10 @@
 #include "memoria.h"
 #include "arquivos.h"
 #include "dispositivos.h"
+#include "estatisticas.h"
+
+#define CARD_LARGURA 70
+#define CARD_INTERNA (CARD_LARGURA - 2)
 
 void limparBuffer(){
     int c;
@@ -168,6 +172,121 @@ void pausar() {
     } while(tecla != 13); // Enter
 }
 
+void barraProgresso(const char *titulo, int porcentagem) {
+
+    int largura = 60;
+
+    if(porcentagem < 0)
+        porcentagem = 0;
+
+    if(porcentagem > 100)
+        porcentagem = 100;
+
+    int preenchidos = (porcentagem * largura) / 100;
+
+    const char *cor;
+
+    if(porcentagem < 50)
+        cor = green;
+    else if(porcentagem < 80)
+        cor = yellow;
+    else
+        cor = red;
+
+    printf("%s: [", titulo);
+
+    for(int i = 0; i < largura; i++) {
+
+        if(i < preenchidos)
+            printf("%s█" reset, cor);
+        else
+            printf(white "░" reset);
+    }
+
+    printf("] %d%%\n", porcentagem);
+}
+
+void cardInicio(const char *titulo) {
+
+    int tamanho = strlen(titulo);
+    int esquerda = (CARD_INTERNA - tamanho) / 2;
+    int direita = CARD_INTERNA - tamanho - esquerda;
+
+    printf("\n");
+
+    printf(cyan "┌");
+    for(int i = 0; i < CARD_INTERNA; i++) printf("─");
+    printf("┐\n");
+
+    printf("│");
+    for(int i = 0; i < esquerda; i++) printf(" ");
+    printf("%s", titulo);
+    for(int i = 0; i < direita; i++) printf(" ");
+    printf("│\n");
+
+    printf("├");
+    for(int i = 0; i < CARD_INTERNA; i++) printf("─");
+    printf("┤\n" reset);
+}
+
+void cardFim() {
+
+    printf(cyan "└");
+    for(int i = 0; i < CARD_INTERNA; i++) printf("─");
+    printf("┘\n" reset);
+}
+
+void cardLinha(const char *texto) {
+
+    int tamanho = strlen(texto);
+    int espacos = CARD_INTERNA - tamanho - 2;
+
+    if(espacos < 0) espacos = 0;
+
+    printf(cyan "│ " reset);
+    printf("%s", texto);
+
+    for(int i = 0; i < espacos; i++) printf(" ");
+
+    printf(cyan " │\n" reset);
+}
+
+void cardTexto(const char *rotulo, const char *valor) {
+
+    char texto[150];
+
+    snprintf(texto, sizeof(texto),
+             "%-24s: %s",
+             rotulo,
+             valor);
+
+    cardLinha(texto);
+}
+
+void cardNumero(const char *rotulo, int valor) {
+
+    char valorTexto[30];
+
+    snprintf(valorTexto, sizeof(valorTexto), "%d", valor);
+
+    cardTexto(rotulo, valorTexto);
+}
+
+void cardTextoCor(const char *rotulo, const char *valor, const char *cor) {
+
+    int tamanhoVisivel = 1 + 24 + 2 + strlen(valor);
+    int espacos = CARD_INTERNA - tamanhoVisivel - 1;
+
+    if(espacos < 0) espacos = 0;
+
+    printf(cyan "│ " reset);
+    printf("%-24s: %s%s" reset, rotulo, cor, valor);
+
+    for(int i = 0; i < espacos; i++) printf(" ");
+
+    printf(cyan " │\n" reset);
+}
+
 void menuPrincipal(){
 
     int op;
@@ -197,8 +316,8 @@ void menuPrincipal(){
                 break;
 
             case 2:
-             menuEscalonador();
-             break;
+                menuEscalonador();
+                break;
 
             case 3:
                 apagarLinhas(1);
@@ -220,8 +339,8 @@ void menuPrincipal(){
 
             case 6:
                 apagarLinhas(1);
-                printf("WIP");
-                Sleep(1000);
+                monitorSistema();
+                pausar();
                 break;
 
             case 0:
