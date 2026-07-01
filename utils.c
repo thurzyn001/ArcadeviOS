@@ -12,6 +12,7 @@
 #include "arquivos.h"
 #include "dispositivos.h"
 #include "estatisticas.h"
+#include "concorrencia.h"
 
 #define CARD_LARGURA 70
 #define CARD_INTERNA (CARD_LARGURA - 2)
@@ -305,6 +306,7 @@ void menuPrincipal(){
         printf("4 - Dispositivos\n");
         printf("5 - Arquivos\n");
         printf("6 - Estatisticas\n");
+        printf("7 - Concorrencia\n");
         printf("0 - Sair\n");
 
         op = lerInteiro("Opcao: ");
@@ -341,6 +343,12 @@ void menuPrincipal(){
                 apagarLinhas(1);
                 monitorSistema();
                 pausar();
+                break;
+
+            case 7:
+                apagarLinhas(1);
+                menuConcorrencia();
+                Sleep(1000);
                 break;
 
             case 0:

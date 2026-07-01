@@ -12,6 +12,7 @@
 #include "arquivos.h" //Cabeçalho de arquivos.c
 #include "dispositivos.h" //Cabeçalho de dispositivos.c
 #include "estatisticas.h" //Cabeçalho de estatisticas.c
+#include "concorrencia.h" //Cabeçalho de concorrencia.c
 
 //Função Principal do Código
 int main() {

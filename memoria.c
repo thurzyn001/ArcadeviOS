@@ -138,8 +138,6 @@ void calcularBlocos(int *ocupados, int *livres) {
 
 void exibirMapaMemoria() {
 
-    int largura = larguraTerminal();
-
     system("cls");
 
     int usada = 0;
